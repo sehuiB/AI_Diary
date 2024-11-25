@@ -4,7 +4,7 @@ from langchain.schema import HumanMessage
 import os
 
 # OpenAI API 키 설정
-os.environ["OPENAI_API_KEY"] = "sk-XniNaYmpzvfRYqJl3kagIKVbYp9FJ9nHPwnW5KdcAhT3BlbkFJ9PYJslmcFC6yIfl6klbmHGfw6iDDFQMR2Gys2PUMEA"
+os.environ["OPENAI_API_KEY"]="YOUR_API_KEY"
 
 def generate_prompt(where=None, what=None, feeling=None, gender=None, hair=None):
     # template 정의

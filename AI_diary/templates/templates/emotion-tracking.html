@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Emotion Tracking</title>
+</head>
+<body>
+    <header>
+        <h1>Emotion Tracking</h1>
+    </header>
+    <section>
+        <h2>Track Your Emotions</h2>
+        <p>Select your emotion for today:</p>
+        <form id="emotion-form">
+            <label>
+                <input type="radio" name="emotion" value="happy">
+                <span>😊 Happy</span>
+            </label>
+            <label>
+                <input type="radio" name="emotion" value="sad">
+                <span>😢 Sad</span>
+            </label>
+            <label>
+                <input type="radio" name="emotion" value="angry">
+                <span>😠 Angry</span>
+            </label>
+            <label>
+                <input type="radio" name="emotion" value="excited">
+                <span>🤩 Excited</span>
+            </label>
+            <button type="submit">Save Emotion</button>
+        </form>
+        <div id="emotion-statistics">
+            <h3>Emotion Statistics</h3>
+            <canvas id="emotion-chart"></canvas>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.getElementById('emotion-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const selectedEmotion = document.querySelector('input[name="emotion"]:checked').value;
+            // Send emotion to backend
+            fetch('/track-emotion/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({ user_id: 1, emotion: selectedEmotion })
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                fetchEmotionStatistics(); // Refresh statistics after saving emotion
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Fetch and display statistics
+        function fetchEmotionStatistics() {
+            fetch('/emotion-statistics/1', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('emotion-chart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(data.emotion_counts),
+                            datasets: [{
+                                label: 'Emotion Count',
+                                data: Object.values(data.emotion_counts),
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching emotion statistics:', error);
+                });
+        }
+
+        fetchEmotionStatistics();
+    </script>
+    <footer>
+        <p>&copy; 2024 AI Diary Project Team</p>
+    </footer>
+</body>
+</html>

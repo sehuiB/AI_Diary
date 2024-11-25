@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Website</title>
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <nav>
+        {% if user.is_authenticated %}
+            <!-- 로그인 상태일 때 -->
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <!-- 비로그인 상태일 때 -->
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </nav>
+
+    <!-- 페이지 콘텐츠 -->
+    <div>
+        {% block content %}
+        <!-- 페이지별 내용이 들어갈 곳 -->
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>생성된 프롬프트</title>
+    {% load static %} 
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .prompt-box {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .image-box {
+            margin: 0 auto 20px;
+            max-width: 600px;
+            text-align: center;
+        }
+        .image-box img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>생성된 일기</h1>
+    
+    <!-- 이미지 박스 -->
+    <div class="image-box">
+        <img src="{% static 'images/example1.jpg' %}" alt="일기 관련 이미지">
+    </div>
+    
+    <!-- 일기 박스 -->
+    <div class="prompt-box">
+        <p>{{ prompt }}</p>
+    </div>
+</body>
+</html>

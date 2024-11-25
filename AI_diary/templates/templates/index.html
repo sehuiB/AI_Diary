@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>AI 그림일기 서비스</title>
+         {% load static %}
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <style>
+    /* 사이드바 */
+    #sidebar-wrapper {
+        width: 180px; /* 사이드바 너비를 줄임 */
+        overflow-x: hidden; /* 넘치는 내용을 숨김 */
+    }
+
+    /* 페이지 콘텐츠 */
+    #page-content-wrapper {
+        margin-left: 180px; /* 사이드바 너비에 맞춰 여백 조정 */
+        padding: 20px; /* 콘텐츠 내부 여백 */
+    }
+
+    /* 리스트 그룹 */
+    .list-group-item {
+        font-size: 14px; /* 텍스트 크기 줄임 */
+        padding: 8px 16px; /* 내부 여백 줄임 */
+    }
+
+    /* 네비게이션 바 */
+    .navbar {
+        max-width: 100%; /* 너비 제한 */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px; /* 네비게이션 바 패딩 조정 */
+    }
+</style>
+
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">AI 그림일기 서비스</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="{% url 'home' %}">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="{% url 'create_diary' %}">일기 만들러가기</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="{% url 'gallery' %}">갤러리</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-primary" id="sidebarToggle">Menu</button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원정보</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{% url 'signup' %}">회원가입</a>
+                                        <a class="dropdown-item" href="{% url 'login' %}">로그인</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h1 class="mt-4">AI 기반 그림 일기 서비스</h1>
+
+        <p>
+            <strong>AI 기반 그림 일기 서비스</strong>는 사용자가 경험한 하루를 글로 작성하고, 이를 기반으로 인공지능(AI)이 그림을 생성해주는 플랫폼입니다. 
+            <p>일상 속 소중한 순간들을 시각적으로 기록하고, 개인의 창의력을 자극하며, 유니크한 일기를 만들어주는 이 서비스는 현대적 기술과 전통적인 일기 작성의 즐거움을 결합합니다.</p>
+        </p>
+
+        <h2>주요 기능</h2>
+        <ul>
+            <li><strong>텍스트 입력으로 그림 생성:</strong> 사용자가 작성한 일기를 분석하여 상황과 감정을 시각적으로 표현한 이미지를 생성합니다.</li>
+            <li><strong>다양한 스타일 선택:</strong> 동화책, 수채화, 인상주의, 애니메이션 등 다양한 스타일 중 원하는 스타일을 선택할 수 있습니다.</li>
+            <li><strong>일기와 그림의 저장 및 관리:</strong> 생성된 일기와 이미지를 갤러리 형식으로 저장하여, 추억을 영구히 보관할 수 있습니다.</li>
+            <li><strong>직관적인 사용자 인터페이스:</strong> 달력, 텍스트 입력창, 그림 스타일 선택 메뉴를 통해 간편하게 서비스를 이용할 수 있습니다.</li>
+        </ul>
+
+        <h2>특장점</h2>
+        <ul>
+            <li><strong>창의력과 감성의 융합:</strong> 글로만 기록하던 일기의 한계를 넘어, AI가 생성한 그림으로 감각적이고 창의적인 경험을 제공합니다.</li>
+            <li><strong>아이와 가족을 위한 플랫폼:</strong> 어린이와 가족 단위 사용자를 위해 설계된 기능은 교육적이고 재미를 더합니다.</li>
+            <li><strong>개인화된 경험:</strong> 사용자의 스타일과 텍스트에 따라 독창적인 결과물을 제공하여 개인화된 경험을 선사합니다.</li>
+            <li><strong>사용의 편리함:</strong> 복잡한 기술 없이 누구나 간단히 자신만의 그림 일기를 만들어낼 수 있습니다.</li>
+        </ul>
+
+        <p>
+            이 서비스는 여러분의 일상 기록에 새로운 가치를 더하며, 감성을 시각적으로 표현하는 특별한 경험을 제공합니다. 오늘 바로 "AI 기반 그림 일기 서비스"로
+            당신의 이야기를 그림으로 남겨보세요!
+        </p>
+                    </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script>
+            // Sidebar toggle script
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const wrapper = document.getElementById('wrapper');
+            sidebarToggle.addEventListener('click', () => {
+                wrapper.classList.toggle('toggled');
+            });
+        </script>
+    </body>
+</html>

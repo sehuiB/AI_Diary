@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>갤러리</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .calendar {
+            margin: 20px 0;
+        }
+        .gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>갤러리 색칠공부</h1>
+    </header>
+
+    <!-- 달력 -->
+    <div class="calendar">
+        <label for="datePicker">날짜를 선택하세요:</label>
+        <input type="date" id="datePicker">
+    </div>
+
+    <!-- 갤러리 섹션 -->
+    <div class="gallery" id="gallery">
+        <p>날짜를 선택하면 이미지가 표시됩니다.
+            이미지를 클릭하면 색칠공부 버전 이미지가 표시됩니다.
+        </p>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // 날짜 선택 시 이미지 표시
+            $('#datePicker').on('change', function() {
+                const selectedDate = $(this).val(); // 사용자가 선택한 날짜
+                const gallery = $('#gallery');
+                gallery.empty(); // 기존 이미지 제거
+
+                // 날짜에 따른 고정 이미지 매핑 (예시)
+                const images = {
+                    '2024-11-25': [
+                        { src: '{% static "images/example1.jpg" %}', alt: '{% static "images/example1b.jpg" %}' },
+
+                    ],
+                    '2024-11-26': [
+                    { src: '{% static "images/example2.jpg" %}', alt: '{% static "images/example2b.jpg" %}' }
+                ]
+                }
+                // 선택한 날짜의 이미지 배열 가져오기
+                const selectedImages = images[selectedDate];
+
+                if (selectedImages) {
+                    // 선택된 날짜에 해당하는 이미지 추가
+                    selectedImages.forEach(imgData => {
+                        const imgElement = $(`<img src="${imgData.src}" data-alt="${imgData.alt}" alt="Image for ${selectedDate}">`);
+                        gallery.append(imgElement);
+                    });
+                } else {
+                    // 해당 날짜에 이미지가 없는 경우 메시지 표시
+                    gallery.html('<p>선택한 날짜에 해당하는 이미지가 없습니다.</p>');
+                }
+            });
+
+            // 이미지 클릭 시 src와 data-alt 교체
+            $(document).on('click', '.gallery img', function() {
+                const currentSrc = $(this).attr('src');
+                const altSrc = $(this).data('alt');
+                $(this).attr('src', altSrc); // 이미지를 교체
+                $(this).data('alt', currentSrc); // 이전 이미지를 data-alt로 저장
+            });
+        });
+    </script>
+</body>
+</html>

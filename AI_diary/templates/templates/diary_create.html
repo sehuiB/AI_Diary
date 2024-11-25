@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Diary</title>
+    <script>
+        async function generateImage() {
+            const diaryText = document.getElementById("diaryText").value;
+            if (!diaryText) {
+                alert("Please enter diary text!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("diary_text", diaryText);
+
+            const response = await fetch("{% url 'generate_image' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("generatedImage").src = data.image_url;
+            } else {
+                alert("Error generating image. Please try again!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Create a Diary Entry</h1>
+    <textarea id="diaryText" placeholder="Write your diary here..."></textarea><br>
+    <button onclick="generateImage()">Generate Image</button>
+    <div>
+        <h2>Generated Image</h2>
+        <img id="generatedImage" src="" alt="Generated Image" />
+    </div>
+</body>
+</html>
